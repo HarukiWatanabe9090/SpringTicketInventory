@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>チケット予約管理システム</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<h1>[[${title}]]</h1>
+<div class="text">
+<p>[[${message}]]</p>
+</div>
+<div>
+<a th:href="@{/ticketInventory/{status}(status=${status})}">メニューへ戻る</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>チケット予約管理システム</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+	<header>
+		<h1 class="page-header">(公演名)チケット予約管理システム</h1>
+	</header>
+	<main>
+		<a href="/ticketInventory/admin/setting">&lt;&lt; 公演設定へ戻る</a>
+		<div class="text">&lt;編集する&gt;</div>
+
+		<table class="reserve">
+			<tr>
+				<th>ID</th>
+				<th>券種 / 料金</th>
+				<th></th>
+			</tr>
+			<tr th:each="type :${typeList}">
+				<td>[[${type.id}]]</td>
+				<td>
+					<form action="" method="post" th:object="${type}" >
+						<input type="text" name="editName" th:value="${type.name}" class="small"/> <input
+							type="text" name="editPrice" th:value="${type.price}" class="small"/> <input
+							type="hidden" name="editId" th:value="${type.id}" /><input
+							type="submit" value="編集する" class="change">
+					</form>
+				</td>
+				<td style="padding: 0px;">
+					<form action="" method="post" >
+						<input type="hidden" name="deleteId" th:value="${type.id}" /><input
+							type="submit" value="削除" class="cancell">
+					</form>
+				</td>
+			</tr>
+		</table>
+		<div class="text">&lt;券種を追加する&gt;</div>
+		<form action="" method="post" th:object="${addType}">
+			<table class="reserve">
+				<tr>
+					<th>券種</th>
+					<th>料金</th>
+				</tr>
+				<tr>
+					<td><input type="text" th:field="*{name}" class="small"/></td>
+					<td><input type="text" th:field="*{price}" class="small"/> <input
+						type="submit" value="追加する" class="change"></td>
+				</tr>
+			</table>
+		</form>
+	</main>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("form").submit(function() {
+				return confirm("編集を実行しますか？");
+			});
+		});
+	</script>
+
+</body>
+</html>

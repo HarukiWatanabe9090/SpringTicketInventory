@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.app.dao.PaymentDao">
+
+	<select id="selectAll" resultType="com.example.app.domain.Payment">
+		SELECT * FROM payment
+	</select>
+
+	<select id="selectById" parameterType="int" resultType="com.example.app.domain.Payment">
+		SELECT * FROM payment WHERE payment.id = #{id}
+	</select>
+
+	<insert id="insert" parameterType="com.example.app.domain.Payment"
+		useGeneratedKeys="true">
+		INSERT INTO payment (way)
+		VALUES (#{way})
+	</insert>
+
+	<update id="update" parameterType="com.example.app.domain.Payment">
+		UPDATE  payment
+		SET way =#{way}
+		WHERE id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		DELETE FROM payment WHERE id = #{id}
+	</delete>
+
+</mapper>

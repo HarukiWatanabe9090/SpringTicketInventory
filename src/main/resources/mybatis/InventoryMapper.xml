@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.app.dao.InventoryDao">
+
+	<resultMap id="joinedResult" type="com.example.app.domain.Inventory">
+		<id property="id" column="id" />
+		<result property="sheet" column="sheet" />
+
+		<association property="schedules" column="schedules_id"
+			javaType="com.example.app.domain.Schedules">
+			<id property="id" column="schedules_id" />
+			<result property="schedule" column="schedules_schedule" />
+			<result property="end" column="end" />
+		</association>
+
+		<association property="type" column="type_id"
+			javaType="com.example.app.domain.Type">
+			<id property="id" column="type_id" />
+			<result property="name" column="type_name" />
+			<result property="price" column="price" />
+		</association>
+
+	</resultMap>
+
+	<select id="selectAll" resultMap ="joinedResult">
+		SELECT
+		inventory.id,
+		schedules.id AS schedules_id,
+		schedules.schedule AS schedules_schedule,
+		type.id AS type_id,
+		type.name AS type_name,
+		type.price AS price,
+		inventory.sheet
+		FROM inventory
+		JOIN schedules ON inventory.schedules_id = schedules.id
+		JOIN type ON inventory.type_id = type.id
+		ORDER BY inventory.id ASC
+	</select>
+
+	<select id="selectById" parameterType="int" resultMap ="joinedResult">
+		SELECT
+		inventory.id,
+		schedules.id AS schedules_id,
+		schedules.schedule AS schedules_schedule,
+		type.id AS type_id,
+		type.name AS type_name,
+		type.price AS price,
+		inventory.sheet
+		FROM inventory
+		JOIN schedules ON inventory.schedules_id = schedules.id
+		JOIN type ON inventory.type_id = type.id
+		WHERE inventory.id= #{id}
+	</select>
+
+	<select id="selectBySchedulesIdAndTypeId" resultMap ="joinedResult">
+		SELECT
+		inventory.id,
+		schedules.id AS schedules_id,
+		schedules.schedule AS schedules_schedule,
+		type.id AS type_id,
+		type.name AS type_name,
+		type.price AS price,
+		inventory.sheet
+		FROM inventory
+		JOIN schedules ON inventory.schedules_id = schedules.id
+		JOIN type ON inventory.type_id = type.id
+		WHERE schedules_id=#{schedulesId} AND type_id=#{typeId}
+	</select>
+
+	<insert id="insert" parameterType="com.example.app.domain.Inventory"
+	 keyProperty="id">
+		INSERT INTO inventory (schedules_id,type_id,sheet)
+		VALUES (#{schedules.id},#{type.id},#{sheet})
+	</insert>
+
+	<update id="update" parameterType="com.example.app.domain.Inventory">
+		UPDATE inventory
+		SET sheet = #{sheet}
+		WHERE id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		DELETE FROM inventory WHERE id = #{id}
+	</delete>
+
+</mapper>

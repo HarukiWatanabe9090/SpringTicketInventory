@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.app.dao.OrdersDao">
+
+	<select id="selectAll" resultType="com.example.app.domain.Orders">
+		SELECT * FROM orders ORDER BY orders.id ASC
+	</select>
+
+	<select id="selectById" parameterType="int" resultType="com.example.app.domain.Orders">
+		SELECT * FROM orders
+		WHERE orders.id= #{id}
+	</select>
+
+	<insert id="insert" parameterType="com.example.app.domain.Orders"
+		useGeneratedKeys="true">
+		INSERT INTO orders (name)
+		VALUES (#{name})
+	</insert>
+
+	<update id="update" parameterType="com.example.app.domain.Orders">
+		UPDATE orders
+		SET name = #{name}
+		WHERE id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		DELETE FROM orders WHERE id = #{id}
+	</delete>
+
+</mapper>

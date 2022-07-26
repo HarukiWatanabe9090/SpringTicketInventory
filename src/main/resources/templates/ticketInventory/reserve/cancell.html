@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>チケット予約管理システム</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+	<h1>チケットを取り消す</h1>
+	<div class="text">
+	<p>以下の予約を取り消します。よろしければ確定を押してください。</p>
+	</div>
+		<table class="inForm" th:object="${reserves}">
+			<tr>
+				<th>公演回</th>
+				<td>[[*{schedules.schedule}]]</td>
+				</tr>
+				<tr>
+				<th>券種</th>
+				<td>[[*{type.name}]]</td>
+				</tr>
+				<tr>
+				<th>枚数</th>
+				<td>[[*{amount}]] 枚</td>
+				</tr>
+				<tr>
+				<th>合計</th>
+				<td>[[*{total}]] 円</td>
+				</tr>
+				<tr>
+				<th>支払い方法</th>
+				<td>[[*{payment.way}]]</td>
+				</tr>
+				<tr>
+				<th>扱い</th>
+				<td>[[*{orders.name}]]</td>
+				</tr>
+				<tr>
+				<th>備考</th>
+				<td>[[*{note}]]</td>
+				</tr>
+		</table>
+	<form action="" method="post">
+		<p>
+		<input type="submit" value="取消を確定" class="button">
+		</p>
+
+	</form>
+	<div>
+	<a href="javascript:history.back();">メニューへ戻る</a>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script>
+	$(document).ready(function(){
+		$("form").submit(function(){
+			return confirm("本当に取り消しますか？");
+		});
+	});
+	</script>
+
+</body>
+</html>

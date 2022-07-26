@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>チケット予約管理システム</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+	<header>
+		<h1 class="page-header">(公演名)チケット予約管理システム</h1>
+	</header>
+	<main>
+			<a href="/ticketInventory/admin">&lt;&lt; メニューへ戻る</a>
+		<div class="text">&lt;残席数管理&gt;</div>
+		<div class="reserve" id="reserve">
+			<table>
+				<thead>
+					<tr>
+						<th class="sort id" data-sort="id">ID</th>
+						<th class="sort schedulesSchedule" data-sort="schedulesSchedule">公演日</th>
+						<th class="sort typeName" data-sort="typeName">券種</th>
+						<th class="inventory">残席数</th>
+						<th class="edit"></th>
+					</tr>
+				</thead>
+				<tbody class="list">
+					<tr th:each="inventory : ${inventoryList}">
+						<td class="id">[[${inventory.id}]]</td>
+						<td class="schedulesSchedule">[[${inventory.schedules.schedule}]]</td>
+						<td class="typeName">[[${inventory.type.name}]]</td>
+						<td style="padding: 0px"><form action="" method="post" th:object="${inventory}">
+								<input type="text" size="4" th:value="${inventory.sheet}"
+									name="sheet" /> <input type="hidden"
+									th:value="${inventory.id}" name="id" /> <input type="submit"
+									value="更新" class="change">
+							</form></td>
+						<td style="padding: 0px">
+							<form action="" method="post">
+								<input type="hidden" name="deleteId" th:value="${inventory.id}" /><input
+									type="submit" value="削除" class="cancell">
+							</form>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="text">&lt;残席数を追加する&gt;</div>
+			<form action="" method="post" th:object="${addInventory}">
+				<table>
+					<tr>
+						<th class="schedulesSchedule">公演日</th>
+						<th class="typeName">券種</th>
+						<th colspan="2" class="inventory">残席数</th>
+					</tr>
+					<tr>
+						<td style="padding: 0px"><select th:field="*{schedules.id}">
+								<option th:each="schedules : ${schedulesList}"
+									th:value="${schedules.id}" th:text="${schedules.schedule}"></option>
+						</select></td>
+						<td style="padding: 0px"><select th:field="*{type.id}">
+								<option th:each="type : ${typeList}" th:value="${type.id}"
+									th:text="${type.name}"></option>
+						</select></td>
+						<td><input type="text" th:field="*{sheet}" size="4" /></td>
+						<td style="padding: 0px"><input type="submit" value="追加する" class="change"></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+
+	</main>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("form").submit(function() {
+				return confirm("残席数を更新しますか？");
+			});
+		});
+	</script>
+</body>
+	<script th:src="@{/js/list.min.js}"></script>
+	<script>
+		var options = {
+			valueNames : [ 'id', 'schedulesSchedule', 'typeName', ]
+		};
+
+		var reserveList = new List('reserve', options);
+
+		reserveList.sort('id', {
+			order : 'asc'
+		});
+	</script>
+</html>

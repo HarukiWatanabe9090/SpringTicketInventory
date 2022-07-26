@@ -1,0 +1,291 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css?family=Raleway");
+@import url("https://fonts.googleapis.com/css?family=Roboto:300");
+/*
+#83c5be
+#edf6f9
+#ffddd2
+#e29578
+*/
+
+
+body {
+    font-family: 'HG丸ゴシックM-PRO','メイリオ', Meiryo, Osaka, '游ゴシック体', 'Yu Gothic', YuGothic, 'ヒラギノ角ゴシックPro', 'Hiragino Kaku Gothic Pro','ＭＳＰゴシック', 'MS PGothic', sans-serif;
+    line-height: 1.5;
+    background-color:#edf6f9;
+    width:1300px;
+	margin:5px;
+}
+div{
+	font-size:15px;
+	margin-bottom:5px;
+}
+h1{
+	height:50px;
+	padding:10px;
+	margin:5px 0px;
+	background-color:#006d77;
+	color:#edf6f9;
+	font-size:25px;
+}
+h2{
+	font-size:30px;
+	margin:0px;
+}
+.menu{
+	font-size:15px;
+	margin-bottom:5px;
+	margin-right:10px;
+}
+.text{
+	font-size:18px;
+	margin-top:8px;
+	margin-right:10px;
+	font-weight:bold;
+}
+.container{
+	display:flex;
+	margin-left:0px;
+
+}
+
+.admin-container{
+	width:1000px;
+	display:flex;
+	justify-content:space-between;
+}
+.list-container{
+	width:1000px;
+	height:45px;
+	display:flex;
+	justify-content:space-between;
+}
+.list{
+	width:120px;
+}
+.list2{
+	width:250px;
+}
+.button-container{
+	display:flex;
+}
+table{
+	border:1px solid #000;
+	border-collapse:collapse;
+	margin-bottom:10px;
+	margin-top:0px;
+}
+table.mainList{
+	table-layout:fixed;
+	width:1300px;
+
+}
+table.memberList{
+	width:900px;
+}
+table.settingList{
+	width:550px;
+}
+table.window{
+	width:350px;
+}
+table.inForm{
+	margin:10px,5px;
+	width:500px;
+}
+table.inForm th{
+	text-align:left;
+	width:30%;
+}
+table.inForm td{
+	text-align:left;
+}
+table.inForm select,table.inForm input{
+	width:100%;
+}
+
+th,td{
+	text-align:left;
+	border:1px solid;
+	padding: 5px;
+	padding-left: 6px;
+	height:5px;
+}
+th{
+	background:#83c5be;
+}
+th.id{
+	width:40px;
+}
+th.check{
+	width:40px;
+}
+th.checkDirect{
+	width:85px;
+}
+th.handlle{
+	width:80px;
+}
+th.memberFurigana{
+	width:150px;
+}
+th.memberName{
+	width:100px;
+}
+th.email{
+	width:200px;
+}
+th.status{
+	width:250px;
+}
+th.inventory{
+	width:100px;
+}
+th.edit{
+	width:40px;
+}
+th.staff{
+	width:170px;
+}
+th.schedulesSchedule{
+	width:170px;
+}
+th.typeName{
+	width:50px;
+}
+th.amount{
+	width:50px;
+}
+th.total{
+	width:75px;
+}
+th.paymentWay{
+	width:75px;
+}
+th.ordersName{
+	width:50px;
+}
+th.note{
+	width:175px;
+}
+th.registered{
+	width:140px;
+}
+input.small{
+	width:80px;
+	font-size:15px;
+}
+input.middle{
+	width:100px
+}
+input.wide{
+	width:150px
+}
+td{
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	overflow:hidden;
+	text-align:left;
+}
+
+.sort.desc:after {
+    content: "▼";
+}
+
+.sort.asc:after {
+    content: "▲";
+}
+.error{
+	color:red;
+	font-weight:bold;
+}
+.over{
+	color:red;
+}
+.tips{
+	color:darkslategray;
+	font-size:13px;
+}
+
+.reserve tr:nth-child(2n+1) {
+  background    : #ffffff;           /* 背景色     */
+}
+.button {
+  display       : inline-block;
+  font-weight:bold;
+  border-radius : 5%;          /* 角丸       */
+  font-size     : 12pt;        /* 文字サイズ */
+  text-align    : center;      /* 文字位置   */
+  cursor        : pointer;     /* カーソル   */
+  padding       : 7px 21px;   /* 余白       */
+  background    : #006d77;     /* 背景色     */
+  color         : #edf6f9;     /* 文字色     */
+  line-height   : 1em;         /* 1行の高さ  */
+  box-shadow    : 3px 3px 3px #666666;  /* 影の設定 */
+  border        : 2px solid #006d77;    /* 枠の指定 */
+  text-decoration:none;
+}
+.button:hover {
+  box-shadow    : none;        /* カーソル時の影消去 */
+  color         : #006d77;     /* 背景色     */
+  background    : #edf6f9;     /* 文字色     */
+}
+.button2 {
+  display       : inline-block;
+  font-weight:bold;
+  border-radius : 5%;          /* 角丸       */
+  font-size     : 12pt;        /* 文字サイズ */
+  text-align    : center;      /* 文字位置   */
+  cursor        : pointer;     /* カーソル   */
+  padding       : 7px 21px;   /* 余白       */
+  margin-left:100px;
+  background    : #ffddd2;     /* 背景色     */
+  color         : rgb(128, 0, 0);     /* 文字色     */
+  line-height   : 1em;         /* 1行の高さ  */
+
+  border        : 2px solid #e29578;    /* 枠の指定 */
+  text-decoration:none;
+}
+.button2:hover {
+  box-shadow    : none;        /* カーソル時の影消去 */
+  color         : #e29578;     /* 背景色     */
+  background    : #ffddd2;     /* 文字色     */
+}
+.change {
+  display       : inline-block;
+  font-weight:bold;
+  box-sizing:border-box;
+  border-radius : 5%;          /* 角丸       */
+  font-size     : 15px;        /* 文字サイズ */
+  text-align    : center;      /* 文字位置   */
+  cursor        : pointer;     /* カーソル   */
+  padding       : 2px 5px;   /* 余白       */
+  background    : #edf6f9;     /* 背景色     */
+  color         : #006d77;     /* 文字色     */
+
+  border        : 2px solid #83c5be;    /* 枠の指定 */
+  text-decoration:none;
+}
+.change:hover {
+  color         : #edf6f9;     /* 背景色     */
+  background    : #006d77;     /* 文字色     */
+}
+.cancell {
+  display       : inline-block;
+  font-weight:bold;
+  box-sizing:border-box;
+  border-radius : 5%;          /* 角丸       */
+  font-size     : 15px;        /* 文字サイズ */
+  text-align    : center;      /* 文字位置   */
+  cursor        : pointer;     /* カーソル   */
+  padding       : 2px 5px;   /* 余白       */
+  background    : #f44f46;     /* 背景色     */
+  color         : #edf6f9;     /* 文字色     */
+
+  border        : 2px solid #f44f46;    /* 枠の指定 */
+  text-decoration:none;
+}
+.cancell:hover {
+  color         : #f44f46;     /* 背景色     */
+  background    : #edf6f9;     /* 文字色     */
+}

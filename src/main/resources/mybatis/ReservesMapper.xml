@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.app.dao.ReservesDao">
+
+	<resultMap id="joinedResult"
+		type="com.example.app.domain.Reserves">
+		<id property="id" column="id" />
+		<result property="amount" column="amount" />
+		<result property="total" column="total" />
+		<result property="note" column="note" />
+		<result property="salesCount" column="sales_count" />
+		<result property="registered" column="registered" />
+		<result property="paid" column="paid" />
+		<result property="visited" column="visited" />
+
+		<association property="member" column="member_id"
+			javaType="com.example.app.domain.Member">
+			<id property="id" column="member_id" />
+			<result property="name" column="member_name" />
+			<result property="furigana" column="member_furigana" />
+			<result property="email" column="email" />
+			<result property="pass" column="password" />
+		</association>
+
+		<association property="schedules" column="schedules_id"
+			javaType="com.example.app.domain.Schedules">
+			<id property="id" column="schedules_id" />
+			<result property="schedule" column="schedules_schedule" />
+			<result property="end" column="end" />
+		</association>
+
+		<association property="type" column="type_id"
+			javaType="com.example.app.domain.Type">
+			<id property="id" column="type_id" />
+			<result property="name" column="type_name" />
+			<result property="price" column="price" />
+		</association>
+
+		<association property="payment" column="payment_id"
+			javaType="com.example.app.domain.Payment">
+			<id property="id" column="payment_id" />
+			<result property="way" column="payment_way" />
+		</association>
+
+		<association property="orders" column="orders_id"
+			javaType="com.example.app.domain.Orders">
+			<id property="id" column="orders_id" />
+			<result property="name" column="orders_name" />
+		</association>
+	</resultMap>
+
+	<select id="selectAll" resultMap="joinedResult">
+		SELECT
+		reserves.id,
+		member.id AS member_id,
+		member.name AS member_name,
+		member.furigana AS member_furigana,
+		schedules.id AS schedules_id,
+		schedules.schedule AS schedules_schedule,
+		type.id AS type_id,
+		type.name
+		AS type_name,
+		reserves.amount,reserves.total,
+		payment.id AS payment_id,
+		payment.way AS payment_way,
+		orders.id AS orders_id,
+		orders.name AS
+		orders_name,
+		reserves.note,reserves.registered,reserves.paid,reserves.visited
+		FROM
+		reserves
+		JOIN member ON reserves.member_id = member.id
+		JOIN schedules ON
+		reserves.schedules_id = schedules.id
+		JOIN type ON reserves.type_id =
+		type.id
+		JOIN payment ON reserves.payment_id = payment.id
+		JOIN orders ON
+		reserves.orders_id = orders.id
+		ORDER BY reserves.id ASC
+	</select>
+
+	<select id="selectMemberReserves" parameterType="int"
+		resultMap="joinedResult">
+		SELECT
+		reserves.id,
+		member.id AS member_id,
+		member.name AS
+		member_name,
+		member.furigana AS member_furigana,
+		schedules.id AS
+		schedules_id,
+		schedules.schedule AS schedules_schedule,
+		type.id AS
+		type_id,
+		type.name AS type_name,
+		reserves.amount,reserves.total,
+		payment.id AS payment_id,
+		payment.way AS payment_way,
+		orders.id AS
+		orders_id,
+		orders.name AS orders_name,
+		reserves.note,reserves.registered,reserves.paid,reserves.visited
+		FROM
+		reserves
+		JOIN member ON reserves.member_id = member.id
+		JOIN schedules ON
+		reserves.schedules_id = schedules.id
+		JOIN type ON reserves.type_id =
+		type.id
+		JOIN payment ON reserves.payment_id = payment.id
+		JOIN orders ON
+		reserves.orders_id = orders.id
+		WHERE member_id = #{id}
+		ORDER BY
+		reserves.id ASC
+	</select>
+
+	<select id="selectById" parameterType="int"
+		resultMap="joinedResult">
+		SELECT
+		reserves.id,
+		member.id AS member_id,
+		member.name AS
+		member_name,
+		member.furigana AS member_furigana,
+		schedules.id AS
+		schedules_id,
+		schedules.schedule AS schedules_schedule,
+		type.id AS
+		type_id,
+		type.name AS type_name,
+		reserves.amount,reserves.total,
+		payment.id AS payment_id,
+		payment.way AS payment_way,
+		orders.id AS
+		orders_id,
+		orders.name AS orders_name,
+		reserves.note,reserves.registered,reserves.paid,reserves.visited
+		FROM
+		reserves
+		JOIN member ON reserves.member_id = member.id
+		JOIN schedules ON
+		reserves.schedules_id = schedules.id
+		JOIN type ON reserves.type_id =
+		type.id
+		JOIN payment ON reserves.payment_id = payment.id
+		JOIN orders ON
+		reserves.orders_id = orders.id
+		WHERE reserves.id= #{id}
+	</select>
+
+	<select id="selectEachCount" resultMap="joinedResult">
+		SELECT
+		orders.id AS
+		orders_id,
+		orders.name AS orders_name,
+		type.name AS type_name,
+		SUM(amount) AS sales_count
+		FROM reserves
+		LEFT JOIN orders ON
+		reserves.orders_id = orders.id
+		LEFT JOIN type ON reserves.type_id =
+		type.id
+		GROUP BY orders_id,type_id
+		ORDER BY orders_id ASC
+	</select>
+
+	<insert id="insert"
+		parameterType="com.example.app.domain.Reserves"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO reserves
+		(member_id,schedules_id,type_id,amount,total,
+		payment_id,orders_id,note,registered)
+		VALUES
+		(#{member.id},#{schedules.id},#{type.id},#{amount},
+		#{total},#{payment.id},#{orders.id},#{note},NOW())
+	</insert>
+
+	<update id="update"
+		parameterType="com.example.app.domain.Reserves">
+		UPDATE reserves
+		SET member_id =#{member.id},schedules_id
+		= #{schedules.id},
+		type_id =#{type.id}, amount = #{amount},
+		total =
+		#{total}, payment_id = #{payment.id},
+		orders_id = #{orders.id}, note =
+		#{note}, registered = NOW()
+		WHERE id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		DELETE FROM reserves WHERE id
+		= #{id}
+	</delete>
+
+	<update id="visited" parameterType="int">
+		UPDATE reserves
+		SET visited ='done' WHERE id = #{id}
+	</update>
+	<update id="notVisited" parameterType="int">
+		UPDATE reserves
+		SET visited =NULL WHERE id = #{id}
+	</update>
+	<update id="paid" parameterType="int">
+		UPDATE reserves
+		SET paid ='done' WHERE id = #{id}
+	</update>
+	<update id="notPaid" parameterType="int">
+		UPDATE reserves
+		SET paid =NULL WHERE id = #{id}
+	</update>
+
+
+	<select id="count" resultType="long">
+		SELECT COUNT(*) FROM reserves
+	</select>
+
+	<select id="selectLimited" resultMap="joinedResult">
+		SELECT
+		reserves.id,
+		member.id AS member_id,
+		member.name AS member_name,
+		member.furigana AS
+		member_furigana,
+		schedules.id AS schedules_id,
+		schedules.schedule AS
+		schedules_schedule,
+		type.id AS type_id,
+		type.name AS type_name,
+		reserves.amount,reserves.total,
+		payment.id AS payment_id,
+		payment.way AS
+		payment_way,
+		orders.id AS orders_id,
+		orders.name AS orders_name,
+		reserves.note,reserves.registered,reserves.paid,reserves.visited
+		FROM
+		reserves
+		JOIN member ON reserves.member_id = member.id
+		JOIN schedules ON
+		reserves.schedules_id = schedules.id
+		JOIN type ON reserves.type_id =
+		type.id
+		JOIN payment ON reserves.payment_id = payment.id
+		JOIN orders ON
+		reserves.orders_id = orders.id
+		ORDER BY reserves.id ASC
+		LIMIT #{offset},
+		#{numPerPage}
+	</select>
+
+	<select id="countByOrders" resultType="long">
+		SELECT COUNT(*) FROM reserves WHERE orders_id = #{id}
+	</select>
+
+	<select id="selectLimitedByOrders" resultMap="joinedResult">
+		SELECT
+		reserves.id,
+		member.id AS member_id,
+		member.name AS member_name,
+		member.furigana AS
+		member_furigana,
+		schedules.id AS schedules_id,
+		schedules.schedule AS
+		schedules_schedule,
+		type.id AS type_id,
+		type.name AS type_name,
+		reserves.amount,reserves.total,
+		payment.id AS payment_id,
+		payment.way AS
+		payment_way,
+		orders.id AS orders_id,
+		orders.name AS orders_name,
+		reserves.note,reserves.registered,reserves.paid,reserves.visited
+		FROM
+		reserves
+		JOIN member ON reserves.member_id = member.id
+		JOIN schedules ON
+		reserves.schedules_id = schedules.id
+		JOIN type ON reserves.type_id =
+		type.id
+		JOIN payment ON reserves.payment_id = payment.id
+		JOIN orders ON
+		reserves.orders_id = orders.id
+		WHERE orders.id = #{id}
+		ORDER BY reserves.id ASC
+		LIMIT #{offset},
+		#{numPerPage}
+	</select>
+
+	<select id="selectBySchedules" parameterType="int" resultMap="joinedResult">
+		SELECT
+		reserves.id,
+		member.id AS member_id,
+		member.name AS member_name,
+		member.furigana AS
+		member_furigana,
+		schedules.id AS schedules_id,
+		schedules.schedule AS
+		schedules_schedule,
+		type.id AS type_id,
+		type.name AS type_name,
+		reserves.amount,reserves.total,
+		payment.id AS payment_id,
+		payment.way AS
+		payment_way,
+		orders.id AS orders_id,
+		orders.name AS orders_name,
+		reserves.note,reserves.registered,reserves.paid,reserves.visited
+		FROM
+		reserves
+		JOIN member ON reserves.member_id = member.id
+		JOIN schedules ON
+		reserves.schedules_id = schedules.id
+		JOIN type ON reserves.type_id =
+		type.id
+		JOIN payment ON reserves.payment_id = payment.id
+		JOIN orders ON
+		reserves.orders_id = orders.id
+		WHERE schedules.id = #{id}
+		ORDER BY
+		reserves.id ASC
+	</select>
+
+
+</mapper>

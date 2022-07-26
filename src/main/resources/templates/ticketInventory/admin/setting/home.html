@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>チケット予約管理システム</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+	<header>
+		<h1 class="page-header">(公演名)チケット予約管理システム</h1>
+	</header>
+	<main>
+		<a href="/ticketInventory/admin">&lt;&lt; メニューへ戻る</a>
+		<div class="text">&lt;公演設定&gt;</div>
+
+		<table class="inForm">
+			<tr>
+				<th>公演回</th>
+				<td class="schedulesSchedule"><select name="schedulesId">
+						<option th:each="schedules : ${schedulesList}"
+							th:value="${schedules.id}" th:text="${schedules.schedule}"></option>
+				</select></td>
+
+				<td style="padding:0px;width:80px;" class="edit"><form action="" method="post">
+						<button type="submit" class="change" value="0" name="setting">編集する</button>
+					</form></td>
+			</tr>
+			<tr>
+				<th>券種</th>
+				<td class="schedulesSchedule"><select name="typeId">
+						<option th:each="type : ${typeList}" th:value="${type.id}"
+							th:text="${type.name} + ' / ' + ${type.price} + '円'"></option>
+				</select></td>
+
+				<td style="padding:0px;width:80px;" class="edit"><form action="" method="post">
+						<button type="submit" class="change" value="1" name="setting">編集する</button>
+					</form></td>
+			</tr>
+			<tr>
+				<th>支払い方法</th>
+				<td class="schedulesSchedule"><select name="paymentId">
+						<option th:each="payment : ${paymentList}"
+							th:value="${payment.id}" th:text="${payment.way}"></option>
+				</select></td>
+				<td style="padding:0px;width:80px;" class="edit"><form action="" method="post">
+						<button type="submit" class="change" value="2" name="setting">編集する</button>
+					</form></td>
+			</tr>
+
+			<tr>
+				<th>扱い</th>
+				<td class="schedulesSchedule"><select name="ordersId">
+						<option th:each="orders : ${ordersList}" th:value="${orders.id}"
+							th:text="${orders.name}"></option>
+				</select></td>
+				<td style="padding:0px;width:80px;" class="edit"><form action="" method="post">
+						<button type="submit" class="change" value="3" name="setting">編集する</button>
+					</form></td>
+			</tr>
+		</table>
+	</main>
+
+</body>
+</html>
