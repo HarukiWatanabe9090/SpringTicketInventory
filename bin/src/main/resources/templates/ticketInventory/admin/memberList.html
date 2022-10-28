@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>チケット予約管理システム</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+	<header>
+		<h1 class="page-header">(公演名)チケット予約管理システム</h1>
+	</header>
+	<main>
+		<a href="/ticketInventory/admin">&lt;&lt; メニューへ戻る</a>
+
+		<div class="container">
+			<div class="text">&lt;会員一覧&gt;</div>
+		</div>
+		<div class="reserve">
+			<table border="1" class="memberList">
+				<tr>
+					<th class="id">ID</th>
+					<th class="memberName">会員名</th>
+					<th class="memberFurigana">フリガナ</th>
+					<th class="email">メールアドレス</th>
+					<th class="status">ステータス</th>
+					<th colspan="2" class="staff">関係者</th>
+				</tr>
+				<tr th:each="member : ${memberList}">
+					<td>[[${member.id}]]</td>
+					<td>[[${member.name}]]</td>
+					<td>[[${member.furigana}]]</td>
+					<td>[[${member.email}]]</td>
+					<td>[[${member.status}]] <br />[[${member.orders}]]
+					</td>
+					<td style="padding: 0px">
+						<form action="" method="post">
+							<div class="button-container">
+								<select name="ordersId">
+									<option value="0">選択</option>
+									<option th:each="orders : ${ordersList}"
+										th:value="${orders.id}" th:text="${orders.name}"></option>
+								</select>
+							</div>
+							<div class="button-container">
+								<input type="hidden" name="memberId" th:value="${member.id}" />
+								<input type="submit" value="紐づけ" class="change" />
+							</div>
+						</form>
+
+					</td>
+					<td style="padding: 0px">
+						<form action="" method="post">
+							<input type="hidden" name="resetId" th:value="${member.id}" /><input
+								type="submit" value="リセット" class="cancell">
+						</form>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</main>
+	<!-- 2ページ以上の場合、ページネーションを表示:start -->
+	<div th:if="${totalPages >= 2}" class="container">
+		<ul class="pagination">
+			<!-- 前のページへ -->
+			<th:block th:switch="${page}">
+				<li th:case="1" class="page-item disabled"><a class="page-link"
+					href="">&laquo;</a></li>
+				<li th:case="*" class="page-item"><a class="page-link"
+					th:href="@{/ticketInventory/admin/memberList(page=${page -1})}">&laquo;</a></li>
+			</th:block>
+
+			<!-- ページ番号 -->
+			<th:block th:each="index : ${#numbers.sequence(1, totalPages)}">
+				<th:block th:switch="${index}">
+					<li th:case="${page}" class="page-item active"><a
+						class="page-link" href="">[[${index}]]</a></li>
+					<li th:case="*" class="page-item"><a class="page-link"
+						th:href="@{/ticketInventory/admin/memberList(page=${index})}">[[${index}]]</a></li>
+				</th:block>
+			</th:block>
+
+			<!-- 次のページへ -->
+			<th:block th:switch="${page}">
+				<li th:case="${totalPages}" class="page-item disabled"><a
+					class="page-link" href="">&raquo;</a></li>
+				<li th:case="*" class="page-item"><a class="page-link"
+					th:href="@{admin/memberList(page=${page+1})}">&raquo;</a></li>
+			</th:block>
+		</ul>
+	</div>
+	<!-- 2ページ以上の場合、ページネーションを表示:end -->
+
+	<script th:src="@{/js/jquery-3.5.1.min.js}"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("form").submit(function() {
+				return confirm("編集を実行しますか？");
+			});
+		});
+	</script>
+
+
+</body>
+</html>

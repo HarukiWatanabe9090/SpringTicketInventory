@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>チケット予約管理システム</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+	<h1>予約失敗</h1>
+	<div class="text">
+		<p>
+			予約完了メールの送信に失敗しました。
+			<br>登録しているメールアドレスが正しいか確認してください。
+			<br>しばらく時間を置いてからもう一度、予約し直してください。
+		</p>
+	</div>
+	<div>
+		<a th:href="@{/ticketInventory/{status}(status=${status})}">メニューへ戻る</a>
+	</div>
+</body>
+</html>

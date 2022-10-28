@@ -43,10 +43,12 @@
 				<tr th:each="reserves : ${reservesList}">
 					<td>[[${reserves.id}]]</td>
 					<td><form action="" method="post">
-							<button type="submit" class="change" th:value="${reserves.id}" name="changeId">変更</button>
+							<button type="submit" class="change" th:value="${reserves.id}"
+								name="changeId">変更</button>
 						</form></td>
 					<td><form action="" method="post">
-							<button type="submit" class="cancell" th:value="${reserves.id}" name="cancellId">取消</button>
+							<button type="submit" class="cancell" th:value="${reserves.id}"
+								name="cancellId">取消</button>
 						</form></td>
 					<td>[[${reserves.schedules.schedule}]]</td>
 					<td>[[${reserves.type.name}]]</td>
@@ -56,10 +58,16 @@
 					<td>[[${reserves.orders.name}]]</td>
 					<td>[[${reserves.note}]]</td>
 					<td>[[${#dates.format(reserves.registered,'yyyy/MM/dd
-							HH:mm')}]]</td>
+						HH:mm')}]]</td>
 				</tr>
 			</table>
 		</div>
+		<a class="twitter-timeline" data-chrome="noheader" data-width="500px"
+			href= "https://twitter.com/n1YtohGk1drf4BN?ref_src=twsrc%5Etfw">Tweets
+			by n1YtohGk1drf4BN</a>
+		<script async src="https://platform.twitter.com/widgets.js"
+			charset="utf-8">
+		</script>
 	</main>
 </body>
 </html>

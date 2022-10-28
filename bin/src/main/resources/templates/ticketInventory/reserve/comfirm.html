@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>チケット予約管理システム</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+	<h1>[[${title}]]</h1>
+	<div class="text">
+	<p>以下の内容でよろしければ、[[${message}]]を確定してください。</p>
+	</div>
+		<table class="inForm" th:object="${reserves}">
+			<tr>
+				<th>公演回</th>
+				<td>[[*{schedules.schedule}]]</td>
+				</tr>
+				<tr>
+				<th>券種</th>
+				<td>[[*{type.name}]]</td>
+				</tr>
+				<tr>
+				<th>枚数</th>
+				<td>[[*{amount}]] 枚</td>
+				</tr>
+				<tr>
+				<th>合計</th>
+				<td>[[*{#numbers.formatInteger(total,1,'COMMA')}]] 円</td>
+				</tr>
+				<tr>
+				<th>支払い方法</th>
+				<td>[[*{payment.way}]]</td>
+				</tr>
+				<tr>
+				<th>扱い</th>
+				<td>[[*{orders.name}]]</td>
+				</tr>
+				<tr>
+				<th>備考</th>
+				<td>[[*{note}]]</td>
+				</tr>
+		</table>
+	<form action="" method="post">
+		<p>
+			<button class="button">[[${message}]]を確定する</button>
+		</p>
+	</form>
+	<div>
+	<a href="javascript:history.back();">[[${message}]]画面へ戻る</a>
+	</div>
+</body>
+</html>

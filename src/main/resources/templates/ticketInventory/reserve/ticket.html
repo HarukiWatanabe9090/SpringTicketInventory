@@ -112,20 +112,23 @@
 
 			$.each(inventorys,function(i,inventory){
 				if(inventory.schedules.id == selectSchedules){
-					if(inventory.type.id == form.typeId){
-					$(".types").append($("<option>").val(inventory.type.id)
-							.text(inventory.type.name +"　"+inventory.type.price
-									+"円　残り（" + inventory.sheet + "席）").prop("selected",true));
-					}
 					if(inventory.sheet == 0){
 						$(".types").append($("<option>").val(inventory.type.id)
 								.text(inventory.type.name +"　"+inventory.type.price
 										+"円　<完売しました>").prop("disabled",true));
 					}
+					if(inventory.type.id == form.typeId){
+					$(".types").append($("<option>").val(inventory.type.id)
+							.text(inventory.type.name +"　"+inventory.type.price
+									+"円　残り（" + inventory.sheet + "席）").prop("selected",true));
+					}
 					else{
+						if(inventory.sheet != 0){
+
 					$(".types").append($("<option>").val(inventory.type.id)
 							.text(inventory.type.name +"　"+inventory.type.price
 									+"円　残り（" + inventory.sheet + "席）"));
+						}
 					}
 				}
 			})

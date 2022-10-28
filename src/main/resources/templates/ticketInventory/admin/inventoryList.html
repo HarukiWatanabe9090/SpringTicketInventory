@@ -11,7 +11,7 @@
 		<h1 class="page-header">(公演名)チケット予約管理システム</h1>
 	</header>
 	<main>
-			<a href="/ticketInventory/admin">&lt;&lt; メニューへ戻る</a>
+		<a href="/ticketInventory/admin">&lt;&lt; メニューへ戻る</a>
 		<div class="text">&lt;残席数管理&gt;</div>
 		<div class="reserve" id="reserve">
 			<table>
@@ -29,23 +29,25 @@
 						<td class="id">[[${inventory.id}]]</td>
 						<td class="schedulesSchedule">[[${inventory.schedules.schedule}]]</td>
 						<td class="typeName">[[${inventory.type.name}]]</td>
-						<td style="padding: 0px"><form action="" method="post" th:object="${inventory}">
-								<input type="text" size="4" th:value="${inventory.sheet}"
-									name="sheet" /> <input type="hidden"
+						<td style="padding: 0px">
+							<form action="" method="post" th:object="${inventory}">
+								<input type="number" size="4" th:value="${inventory.sheet}"
+									name="sheet" min="0" max="9999"/> <input type="hidden"
 									th:value="${inventory.id}" name="id" /> <input type="submit"
 									value="更新" class="change">
-							</form></td>
+							</form>
+						</td>
 						<td style="padding: 0px">
 							<form action="" method="post">
-								<input type="hidden" name="deleteId" th:value="${inventory.id}" /><input
-									type="submit" value="削除" class="cancell">
+								<input type="hidden" name="deleteId" th:value="${inventory.id}" />
+								<input type="submit" value="削除" class="cancell">
 							</form>
 						</td>
 					</tr>
 				</tbody>
 			</table>
-			<div class="text">&lt;残席数を追加する&gt;</div>
 			<form action="" method="post" th:object="${addInventory}">
+			<div class="text">&lt;残席数を追加する&gt;<span th:errors="*{sheet}" class="error"></span></div>
 				<table>
 					<tr>
 						<th class="schedulesSchedule">公演日</th>
@@ -61,8 +63,9 @@
 								<option th:each="type : ${typeList}" th:value="${type.id}"
 									th:text="${type.name}"></option>
 						</select></td>
-						<td><input type="text" th:field="*{sheet}" size="4" /></td>
-						<td style="padding: 0px"><input type="submit" value="追加する" class="change"></td>
+						<td><input type="number" th:field="*{sheet}" size="4" min="1" max="9999"/></td>
+						<td style="padding: 0px"><input type="submit" value="追加する"
+							class="change"></td>
 					</tr>
 				</table>
 			</form>
@@ -78,16 +81,16 @@
 		});
 	</script>
 </body>
-	<script th:src="@{/js/list.min.js}"></script>
-	<script>
-		var options = {
-			valueNames : [ 'id', 'schedulesSchedule', 'typeName', ]
-		};
+<script th:src="@{/js/list.min.js}"></script>
+<script>
+	var options = {
+		valueNames : [ 'id', 'schedulesSchedule', 'typeName', ]
+	};
 
-		var reserveList = new List('reserve', options);
+	var reserveList = new List('reserve', options);
 
-		reserveList.sort('id', {
-			order : 'asc'
-		});
-	</script>
+	reserveList.sort('id', {
+		order : 'asc'
+	});
+</script>
 </html>

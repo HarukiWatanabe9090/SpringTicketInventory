@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>チケット予約管理システム</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+	<header>
+		<h1 class="page-header">(公演名)チケット予約管理システム</h1>
+	</header>
+	<main>
+		<a href="/ticketInventory/admin/setting">&lt;&lt; 公演設定へ戻る</a>
+		<div class="text">&lt;編集する&gt;</div>
+
+		<table class="reserve">
+			<tr>
+				<th >ID</th>
+				<th >公演回</th>
+				<th colspan="2">公演済みにする</th>
+				<th></th>
+			</tr>
+			<tr th:each="schedules : ${schedulesList}">
+				<td>[[${schedules.id}]]</td>
+				<td>
+					<form action="" method="post" th:object="${schedules}">
+						<input type="text" th:value="${schedules.schedule}"
+							name="editSchedule"> <input type="hidden"
+							th:value="${schedules.id}" name="editId" /> <input type="submit"
+							value="編集する" class="change">
+					</form>
+				</td>
+				<td  th:if="${schedules.end != null}">●</td>
+				<td  th:if="${schedules.end == null}"></td>
+				<td style="padding: 0px"><form action=""
+						method="post">
+						<button type="submit" class="change" th:value="${schedules.id}"
+							name="endId">公演済み</button>
+					</form></td>
+				<td style="padding: 0px"><form action="" method="post">
+						<button type="submit" class="cancell" th:value="${schedules.id}"
+							name="deleteId">削除</button>
+					</form></td>
+			</tr>
+		</table>
+		<div class="text">&lt;公演を追加する&gt;</div>
+		<div class="list2">
+		<form action="" method="post" th:object="${addSchedules}">
+			<input type="text" th:field="*{schedule}"/> <input type="submit"
+				value="追加する" class="change">
+		</form>
+		</div>
+	</main>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("form").submit(function() {
+				return confirm("編集を実行しますか？");
+			});
+		});
+	</script>
+
+</body>
+</html>

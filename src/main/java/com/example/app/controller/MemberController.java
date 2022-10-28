@@ -37,7 +37,7 @@ public class MemberController {
 		Member member = memberService.getMemberById(memberId);
 
 
-		if(status == null) {
+		if(status.equals("member")) {
 			model.addAttribute("member", member);
 			model.addAttribute("reservesList", reservesService.getMemberReserves(memberId));
 			model.addAttribute("page", page);

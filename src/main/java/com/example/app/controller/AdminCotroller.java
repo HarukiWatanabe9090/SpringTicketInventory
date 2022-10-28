@@ -1,10 +1,12 @@
 package com.example.app.controller;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -142,7 +144,7 @@ public class AdminCotroller {
 		if (!session.getAttribute("status").equals("admin")) {
 			return "redirect:/";
 		} else {
-			model.addAttribute("inventory", new Inventory());
+//			model.addAttribute("inventory", new Inventory());
 			model.addAttribute("inventoryList", inventoryService.getInventoryList());
 			model.addAttribute("addInventory", new Inventory());
 			model.addAttribute("schedulesList", reservesService.getSchedulesList());
@@ -158,19 +160,42 @@ public class AdminCotroller {
 			@RequestParam(name = "id", required = false) Integer id,
 			@RequestParam(name = "sheet", required = false) Integer sheet,
 			@RequestParam(name = "deleteId", required = false) Integer deleteId,
-			@ModelAttribute("addInventory") Inventory addInventory,
+			@Valid @ModelAttribute("addInventory") Inventory addInventory,
+			Errors errors,
 			Model model) throws Exception {
 		if (id != null) {
-			Inventory inventory = inventoryService.getInventoryById(id);
-			inventory.setSheet(sheet);
-			inventoryService.update(inventory);
-			return "redirect:/ticketInventory/admin/inventoryList";
+			//二次開発で追加↓
+			if (sheet != null) {
+				if (sheet >= 0 && sheet <= 9999) {
+			//ここまで↑
+					Inventory inventory = inventoryService.getInventoryById(id);
+					inventory.setSheet(sheet);
+					inventoryService.update(inventory);
+					return "redirect:/ticketInventory/admin/inventoryList";
+			//二次開発で追加↓
+				}
+			}
+			else {
+				return "redirect:/ticketInventory/admin/inventoryList";
+			}
+			//ここまで↑
 		}
 		if (deleteId != null) {
 			inventoryService.delete(deleteId);
 			return "redirect:/ticketInventory/admin/inventoryList";
 		}
+
 		if (addInventory != null) {
+			//二次開発で追加↓
+			if (errors.hasErrors()) {
+//				model.addAttribute("inventory", new Inventory());
+				model.addAttribute("inventoryList", inventoryService.getInventoryList());
+				model.addAttribute("addInventory", addInventory);
+				model.addAttribute("schedulesList", reservesService.getSchedulesList());
+				model.addAttribute("typeList", reservesService.getTypeList());
+				return "/ticketInventory/admin/inventoryList";
+			}
+			//ここまで↑
 			inventoryService.add(addInventory);
 			return "redirect:/ticketInventory/admin/inventoryList";
 		}
@@ -186,10 +211,10 @@ public class AdminCotroller {
 		if (!session.getAttribute("status").equals("admin")) {
 			return "redirect:/";
 		}
-		Integer schedulesId = (Integer)session.getAttribute("schedulesId");
+		Integer schedulesId = (Integer) session.getAttribute("schedulesId");
 		if (schedulesId != null) {
- 			model.addAttribute("reservesList",reservesService.getReserveListBySchedules(schedulesId));
- 			model.addAttribute("progress", reservesService.getProgress(schedulesId));
+			model.addAttribute("reservesList", reservesService.getReserveListBySchedules(schedulesId));
+			model.addAttribute("progress", reservesService.getProgress(schedulesId));
 			model.addAttribute("schedulesList", settingService.getSchedulesList());
 			model.addAttribute("schedules", new Schedules());
 			return "/ticketInventory/admin/visitedList";

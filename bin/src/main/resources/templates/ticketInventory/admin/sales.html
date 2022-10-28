@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>チケット予約管理システム</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+	<header>
+		<h1 class="page-header">(公演名)チケット予約管理システム</h1>
+	</header>
+	<main>
+		<a href="/ticketInventory/admin">&lt;&lt; メニューへ戻る</a>
+
+		<div class="text">&lt;売り上げ一覧&gt;</div>
+		<div class="reserve">
+			<table border="1" class="window">
+				<tr>
+					<th class="id">ID</th>
+					<th>扱い名</th>
+					<th class="typeName">券種</th>
+					<th>売り上げ枚数</th>
+				</tr>
+				<tr th:each="reserve : ${reserveList}">
+					<td>[[${reserve.orders.id}]]</td>
+					<td>[[${reserve.orders.name}]]</td>
+					<td>[[${reserve.type.name}]]</td>
+					<td>[[${reserve.salesCount}]]</td>
+				</tr>
+			</table>
+		</div>
+	</main>
+
+</body>
+</html>

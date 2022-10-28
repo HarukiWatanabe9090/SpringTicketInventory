@@ -152,19 +152,7 @@
 	</select>
 
 	<select id="selectEachCount" resultMap="joinedResult">
-		SELECT
-		orders.id AS
-		orders_id,
-		orders.name AS orders_name,
-		type.name AS type_name,
-		SUM(amount) AS sales_count
-		FROM reserves
-		LEFT JOIN orders ON
-		reserves.orders_id = orders.id
-		LEFT JOIN type ON reserves.type_id =
-		type.id
-		GROUP BY orders_id,type_id
-		ORDER BY orders_id ASC
+		SELECT * FROM ticketinventorydb.each_orders_sales;
 	</select>
 
 	<insert id="insert"

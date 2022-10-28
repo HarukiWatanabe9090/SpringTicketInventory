@@ -219,6 +219,7 @@ public class ReserveController {
 		newReserves.setTotal(total);
 		newReserves.setId(reserves.getId());
 		newReserves.setMember(reserves.getMember());
+		newReserves.setMember(reserves.getMember());
 
 		session.setAttribute("newReserves", newReserves);
 		return "redirect:/ticketInventory/reserve/change/comfirm";
@@ -238,6 +239,8 @@ public class ReserveController {
 	public String chgComfirmPost(
 			HttpSession session,
 			Model model)throws Exception{
+		Integer memberId =(int)session.getAttribute("memberId");
+		Member member = memberService.getMemberById(memberId);
 		Reserves newReserves=(Reserves)session.getAttribute("newReserves");
 		Reserves lastReserves=(Reserves)session.getAttribute("lastReserves");
 		Inventory lastInventory=(Inventory)session.getAttribute("lastInventory");
@@ -262,7 +265,7 @@ public class ReserveController {
 					email.setAuthentication("haruki.watanabe.0119@gmail.com","nvcwmeimdpqascnq" );
 					email.setFrom("haruki.watanabe.0119@gmail.com","チケット予約システム", "ISO-2022-JP");
 
-					email.addTo(newReserves.getMember().getEmail(),"管理者","ISO-2022-JP");
+					email.addTo(member.getEmail(),"管理者","ISO-2022-JP");
 
 					email.setCharset("ISO-2022-JP");
 					email.setSubject(mail.getSubject());
@@ -270,8 +273,6 @@ public class ReserveController {
 
 					email.send();
 				}catch (EmailException e) {
-					Integer memberId =(int)session.getAttribute("memberId");
-					Member member = memberService.getMemberById(memberId);
 					String status;
 					if(member.getStatus().equals("admin")) {
 						status = "admin";
@@ -289,8 +290,6 @@ public class ReserveController {
 		model.addAttribute("title","予約を変更する");
 		model.addAttribute("message","変更しました");
 
-		Integer memberId =(int)session.getAttribute("memberId");
-		Member member = memberService.getMemberById(memberId);
 		String status;
 		if(member.getStatus().equals("admin")) {
 			status = "admin";

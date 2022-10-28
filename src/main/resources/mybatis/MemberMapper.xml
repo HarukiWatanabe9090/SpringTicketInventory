@@ -82,7 +82,7 @@
 
 	<update id="reset" parameterType="com.example.app.domain.Member">
 		UPDATE member
-		SET status =  NULL ,orders_id= NULL
+		SET status =  'member' ,orders_id= NULL
 		WHERE id = #{id}
 	</update>
 

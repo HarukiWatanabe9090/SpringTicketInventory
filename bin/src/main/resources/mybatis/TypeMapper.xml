@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.app.dao.TypeDao">
+
+	<select id="selectAll" resultType="com.example.app.domain.Type">
+		SELECT * FROM type ORDER BY type.id ASC
+	</select>
+
+	<select id="selectById" parameterType="int" resultType="com.example.app.domain.Type">
+		SELECT type.id,type.name,type.price FROM type
+		WHERE type.id = #{id}
+	</select>
+	<select id="selectByIdToPrice" parameterType="int" resultType="com.example.app.domain.Type">
+		SELECT type.price FROM type
+		WHERE type.id = #{id}
+	</select>
+
+	<insert id="insert" parameterType="com.example.app.domain.Type"
+		useGeneratedKeys="true">
+		INSERT INTO type (name,price)
+		VALUES (#{name},#{price})
+	</insert>
+
+	<update id="update" parameterType="com.example.app.domain.Type">
+		UPDATE  type
+		SET name =#{name}, price =#{price}
+		WHERE id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		DELETE FROM type WHERE id = #{id}
+	</delete>
+
+</mapper>

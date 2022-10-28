@@ -91,7 +91,7 @@ table.window{
 }
 table.inForm{
 	margin:10px,5px;
-	width:500px;
+	width:700px;
 }
 table.inForm th{
 	text-align:left;
@@ -198,6 +198,7 @@ td{
 .error{
 	color:red;
 	font-weight:bold;
+	font-size:14px;
 }
 .over{
 	color:red;

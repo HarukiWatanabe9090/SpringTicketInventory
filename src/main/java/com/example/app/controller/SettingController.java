@@ -1,10 +1,12 @@
 package com.example.app.controller;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -181,7 +183,8 @@ public class SettingController {
 			@RequestParam(name="editName" ,required=false)String editName,
 			@RequestParam(name="editPrice" ,required=false)Integer editPrice,
 			@RequestParam(name="deleteId" ,required=false)Integer deleteId,
-			@ModelAttribute("addType")Type addType,
+			@Valid @ModelAttribute("addType")Type addType,
+			Errors errors,
 			Model model)throws Exception{
 
 		if (editName != null) {
@@ -196,6 +199,14 @@ public class SettingController {
 			return "redirect:/ticketInventory/admin/setting/type";
 		}
 		if (addType != null) {
+			//二次開発で追加↓
+			if (errors.hasErrors()) {
+				model.addAttribute("typeList", service.getTypeList());
+				model.addAttribute("addType",addType);
+				return "/ticketInventory/admin/setting/type";
+			}
+			//ここまで↑
+
 			service.addType(addType);
 			return "redirect:/ticketInventory/admin/setting/type";
 		}

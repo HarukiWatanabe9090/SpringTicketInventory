@@ -45,14 +45,15 @@ public class LoginController {
 		member = service.getMemberByEmail(member.getEmail());
 		session.setAttribute("memberId", member.getId());
 
-		if (member.getStatus()==null) {
-			return "redirect:/ticketInventory/member";
-		}
-		if (member.getStatus().equals("staff")) {
+		if (member.getStatus().equals("member")) {
 			session.setAttribute("status", member.getStatus());
 			return "redirect:/ticketInventory/member";
 		}
-		if (member.getStatus().equals("admin")) {
+			else if (member.getStatus().equals("staff")) {
+			session.setAttribute("status", member.getStatus());
+			return "redirect:/ticketInventory/member";
+		}
+			else if (member.getStatus().equals("admin")) {
 			session.setAttribute("status", member.getStatus());
 			return "redirect:/ticketInventory/admin";
 		}
