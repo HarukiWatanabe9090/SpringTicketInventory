@@ -122,8 +122,8 @@ public class ReserveController {
 			email.setHostName("smtp.gmail.com");
 			email.setStartTLSEnabled(true);
 			email.setSslSmtpPort("465");
-			email.setAuthentication("haruki.watanabe.0119@gmail.com","nvcwmeimdpqascnq" );
-			email.setFrom("haruki.watanabe.0119@gmail.com","チケット予約システム", "ISO-2022-JP");
+			email.setAuthentication("xxxxxxx@gmail.com","nvcwmeimdpqascnq" );
+			email.setFrom("xxxxxxx@gmail.com","チケット予約システム", "ISO-2022-JP");
 
 			email.addTo(reserves.getMember().getEmail(),"管理者","ISO-2022-JP");
 
@@ -262,8 +262,8 @@ public class ReserveController {
 					email.setHostName("smtp.gmail.com");
 					email.setStartTLSEnabled(true);
 					email.setSslSmtpPort("465");
-					email.setAuthentication("haruki.watanabe.0119@gmail.com","nvcwmeimdpqascnq" );
-					email.setFrom("haruki.watanabe.0119@gmail.com","チケット予約システム", "ISO-2022-JP");
+					email.setAuthentication("xxxxxxx@gmail.com","nvcwmeimdpqascnq" );
+					email.setFrom("xxxxxxx@gmail.com","チケット予約システム", "ISO-2022-JP");
 
 					email.addTo(member.getEmail(),"管理者","ISO-2022-JP");
 
